@@ -32,5 +32,15 @@
         name: apache
         state: enabled
       when: ansible_facts['os_family'] == "Debian"
+    - name: installing mysql 
+      package:
+        name: mysql-server
+        state: present
+      when: ansible_facts['os_family'] == "Debian"
+    - name: 
+      ansible.builtin.shell: 
+        executable: mysql_secure_installation
+      when: ansible_facts['os_family'] == "Debian"  
+
 
 
