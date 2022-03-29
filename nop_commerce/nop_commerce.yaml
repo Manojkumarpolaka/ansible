@@ -4,6 +4,7 @@
   become: yes
   vars:
     - java_package:  openjdk-11-jdk
+    - domain_name: mydevops
   tasks:
     - name: update apt repo and cache
       apt:
@@ -12,11 +13,6 @@
     - name: install apache2
       package:
         name: apache2
-        state: present
-      when: ansible_facts['os_family'] == "Debian"
-    - name: install openjdk 11
-      package:
-        name: "{{ java_package }}"
         state: present
       when: ansible_facts['os_family'] == "Debian"
     - name: installing PHP
@@ -37,10 +33,20 @@
         name: mysql-server
         state: present
       when: ansible_facts['os_family'] == "Debian"
-    - name: 
-      ansible.builtin.shell: 
-        executable: mysql_secure_installation
-      when: ansible_facts['os_family'] == "Debian"  
+    - name: creating directory for domain
+      ansible.builtin.file:
+        path: /var/www/{{ mydevops }}
+        state: directory
+      when: ansible_facts['os_family'] == "Debian"
+    - name: assign ownership to domain directory
+      ansible.builtin.file:
+        path: /var/www/{{ mydevops }}
+        owner: $USER
+        recurse: yes
+        state: directory
+      when: ansible_facts['os_family'] == "Debian"
+
+
 
 
 
