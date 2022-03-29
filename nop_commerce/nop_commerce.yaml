@@ -5,7 +5,7 @@
   vars:
     - java_package:  openjdk-11-jdk
     - domain_name: mydevops
-    - username: '$USER'
+    - username: 'devops'
   tasks:
     - name: update apt repo and cache
       apt:
