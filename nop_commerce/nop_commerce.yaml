@@ -35,12 +35,12 @@
       when: ansible_facts['os_family'] == "Debian"
     - name: creating directory for domain
       ansible.builtin.file:
-        path: /var/www/{{ mydevops }}
+        path: /var/www/{{ domain_name }}
         state: directory
       when: ansible_facts['os_family'] == "Debian"
     - name: assign ownership to domain directory
       ansible.builtin.file:
-        path: /var/www/{{ mydevops }}
+        path: /var/www/{{ domain_name }}
         owner: $USER
         recurse: yes
         state: directory
