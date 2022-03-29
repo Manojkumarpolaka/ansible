@@ -2,6 +2,8 @@
 - name: Installing nop commerce
   hosts: all
   become: yes
+  vars:
+    - java_package:  openjdk-11-jdk
   tasks:
     - name: update apt repo and cache
       apt:
