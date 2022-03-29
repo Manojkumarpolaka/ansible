@@ -5,6 +5,7 @@
   vars:
     - java_package:  openjdk-11-jdk
     - domain_name: mydevops
+    - username: '$USER'
   tasks:
     - name: update apt repo and cache
       apt:
@@ -41,10 +42,18 @@
     - name: assign ownership to domain directory
       ansible.builtin.file:
         path: /var/www/{{ domain_name }}
-        owner: '$USER'
+        owner: "{{ username }}"
         recurse: yes
         state: directory
       when: ansible_facts['os_family'] == "Debian"
+    - name: create the configuration file
+      ansible.builtin.template:
+        dest: /etc/apache2/sites-available/mydevops.conf
+        src: 'mydevops.conf.j2'
+        owner: "{{ username }}"
+        group: "{{ username }}"
+      when: ansible_facts['os_family'] == "Debian"
+
 
 
 
